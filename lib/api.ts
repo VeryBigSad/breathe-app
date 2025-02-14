@@ -62,9 +62,10 @@ export interface ApiError {
  * @returns Promise resolving to an array of MoodEntry objects.
  */
 export async function fetchUserCalendarHistory(): Promise<MoodEntry[]> {
+  const typedWin = (window as unknown) as Window & { Telegram: { WebApp: { initData: string } } };
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mood-diary/mood-entries`, {
     headers: {
-      'X-TG-INIT-DATA': window.Telegram.WebApp.initData
+      'X-TG-INIT-DATA': typedWin.Telegram.WebApp.initData
     }
   });
   if (!res.ok) {
